@@ -51,7 +51,6 @@ class CreateDialog;
 class PropertySelector;
 
 class EditorResourceConversionPlugin : public Reference {
-
 	GDCLASS(EditorResourceConversionPlugin, Reference);
 
 protected:
@@ -63,9 +62,8 @@ public:
 	virtual Ref<Resource> convert(const Ref<Resource> &p_resource) const;
 };
 
-class CustomPropertyEditor : public Popup {
-
-	GDCLASS(CustomPropertyEditor, Popup);
+class CustomPropertyEditor : public PopupPanel {
+	GDCLASS(CustomPropertyEditor, PopupPanel);
 
 	enum {
 		MAX_VALUE_EDITORS = 12,

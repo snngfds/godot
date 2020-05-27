@@ -121,7 +121,6 @@ public:
 class AnimationTrackEditor;
 
 class AnimationTrackEdit : public Control {
-
 	GDCLASS(AnimationTrackEdit, Control);
 
 	enum {
@@ -140,6 +139,7 @@ class AnimationTrackEdit : public Control {
 	};
 	AnimationTimelineEdit *timeline;
 	UndoRedo *undo_redo;
+	Popup *path_popup;
 	LineEdit *path;
 	Node *root;
 	Control *play_position; //separate control used to draw so updates for only position changed are much faster
@@ -314,7 +314,7 @@ class AnimationTrackEditor : public VBoxContainer {
 	OptionButton *snap_mode;
 
 	Button *imported_anim_warning;
-	void _show_imported_anim_warning() const;
+	void _show_imported_anim_warning();
 
 	void _snap_mode_changed(int p_mode);
 	Vector<AnimationTrackEdit *> track_edits;
@@ -353,7 +353,6 @@ class AnimationTrackEditor : public VBoxContainer {
 	bool keying;
 
 	struct InsertData {
-
 		Animation::TrackType type;
 		NodePath path;
 		int track_idx;
@@ -378,7 +377,7 @@ class AnimationTrackEditor : public VBoxContainer {
 
 	void _root_removed(Node *p_root);
 
-	PropertyInfo _find_hint_for_track(int p_idx, NodePath &r_base_path, Variant *r_current_val = NULL);
+	PropertyInfo _find_hint_for_track(int p_idx, NodePath &r_base_path, Variant *r_current_val = nullptr);
 
 	void _timeline_value_changed(double);
 
@@ -394,14 +393,12 @@ class AnimationTrackEditor : public VBoxContainer {
 	//selection
 
 	struct SelectedKey {
-
 		int track;
 		int key;
 		bool operator<(const SelectedKey &p_key) const { return track == p_key.track ? key < p_key.key : track < p_key.track; };
 	};
 
 	struct KeyInfo {
-
 		float pos;
 	};
 
@@ -430,7 +427,7 @@ class AnimationTrackEditor : public VBoxContainer {
 	Rect2 box_select_rect;
 	void _scroll_input(const Ref<InputEvent> &p_event);
 
-	Vector<Ref<AnimationTrackEditPlugin> > track_edit_plugins;
+	Vector<Ref<AnimationTrackEditPlugin>> track_edit_plugins;
 
 	void _cancel_bezier_edit();
 	void _bezier_edit(int p_for_track);
@@ -512,7 +509,7 @@ public:
 	void set_anim_pos(float p_pos);
 	void insert_node_value_key(Node *p_node, const String &p_property, const Variant &p_value, bool p_only_if_exists = false);
 	void insert_value_key(const String &p_property, const Variant &p_value, bool p_advance);
-	void insert_transform_key(Spatial *p_node, const String &p_sub, const Transform &p_xform);
+	void insert_transform_key(Node3D *p_node, const String &p_sub, const Transform &p_xform);
 
 	void show_select_node_warning(bool p_show);
 

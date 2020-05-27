@@ -34,7 +34,7 @@
 #include "canvas_item_editor_plugin.h"
 #include "editor/editor_node.h"
 #include "editor/editor_plugin.h"
-#include "scene/2d/sprite.h"
+#include "scene/2d/sprite_2d.h"
 #include "scene/3d/sprite_3d.h"
 #include "scene/gui/nine_patch_rect.h"
 #include "scene/resources/style_box.h"
@@ -45,7 +45,6 @@
 */
 
 class TextureRegionEditor : public VBoxContainer {
-
 	GDCLASS(TextureRegionEditor, VBoxContainer);
 
 	enum SnapMode {
@@ -84,7 +83,7 @@ class TextureRegionEditor : public VBoxContainer {
 	Vector2 snap_step;
 	Vector2 snap_separation;
 
-	Sprite *node_sprite;
+	Sprite2D *node_sprite;
 	Sprite3D *node_sprite_3d;
 	NinePatchRect *node_ninepatch;
 	Ref<StyleBoxTexture> obj_styleBox;
@@ -94,7 +93,7 @@ class TextureRegionEditor : public VBoxContainer {
 	Rect2 rect_prev;
 	float prev_margin;
 	int edited_margin;
-	Map<RID, List<Rect2> > cache_map;
+	Map<RID, List<Rect2>> cache_map;
 	List<Rect2> autoslice_cache;
 	bool autoslice_is_dirty;
 
@@ -136,7 +135,7 @@ public:
 	bool is_atlas_texture();
 	bool is_ninepatch();
 	Sprite3D *get_sprite_3d();
-	Sprite *get_sprite();
+	Sprite2D *get_sprite();
 
 	void edit(Object *p_obj);
 	TextureRegionEditor(EditorNode *p_editor);

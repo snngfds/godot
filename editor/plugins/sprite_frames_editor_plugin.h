@@ -33,7 +33,7 @@
 
 #include "editor/editor_node.h"
 #include "editor/editor_plugin.h"
-#include "scene/2d/animated_sprite.h"
+#include "scene/2d/animated_sprite_2d.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/file_dialog.h"
 #include "scene/gui/split_container.h"
@@ -41,7 +41,6 @@
 #include "scene/gui/tree.h"
 
 class SpriteFramesEditor : public HSplitContainer {
-
 	GDCLASS(SpriteFramesEditor, HSplitContainer);
 
 	ToolButton *load;
@@ -86,7 +85,7 @@ class SpriteFramesEditor : public HSplitContainer {
 
 	void _load_pressed();
 	void _load_scene_pressed();
-	void _file_load_request(const PoolVector<String> &p_path, int p_at_pos = -1);
+	void _file_load_request(const Vector<String> &p_path, int p_at_pos = -1);
 	void _copy_pressed();
 	void _paste_pressed();
 	void _empty_pressed();
@@ -134,7 +133,6 @@ public:
 };
 
 class SpriteFramesEditorPlugin : public EditorPlugin {
-
 	GDCLASS(SpriteFramesEditorPlugin, EditorPlugin);
 
 	SpriteFramesEditor *frames_editor;

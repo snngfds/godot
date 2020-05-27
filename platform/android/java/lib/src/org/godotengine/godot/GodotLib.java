@@ -32,6 +32,8 @@ package org.godotengine.godot;
 
 import android.app.Activity;
 import android.hardware.SensorEvent;
+import android.view.Surface;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -39,7 +41,6 @@ import javax.microedition.khronos.opengles.GL10;
  * Wrapper for native library
  */
 public class GodotLib {
-
 	public static GodotIO io;
 
 	static {
@@ -65,18 +66,19 @@ public class GodotLib {
 
 	/**
 	 * Invoked on the GL thread when the underlying Android surface has changed size.
-	 * @param width
-	 * @param height
+	 * @param p_surface
+	 * @param p_width
+	 * @param p_height
 	 * @see android.opengl.GLSurfaceView.Renderer#onSurfaceChanged(GL10, int, int)
 	 */
-	public static native void resize(int width, int height);
+	public static native void resize(Surface p_surface, int p_width, int p_height);
 
 	/**
-	 * Invoked on the GL thread when the underlying Android surface is created or recreated.
+	 * Invoked on the render thread when the underlying Android surface is created or recreated.
+	 * @param p_surface
 	 * @param p_32_bits
-	 * @see android.opengl.GLSurfaceView.Renderer#onSurfaceCreated(GL10, EGLConfig)
 	 */
-	public static native void newcontext(boolean p_32_bits);
+	public static native void newcontext(Surface p_surface, boolean p_32_bits);
 
 	/**
 	 * Forward {@link Activity#onBackPressed()} event from the main thread to the GL thread.
@@ -136,7 +138,7 @@ public class GodotLib {
 	/**
 	 * Forward regular key events from the main thread to the GL thread.
 	 */
-	public static native void key(int p_scancode, int p_unicode_char, boolean p_pressed);
+	public static native void key(int p_keycode, int p_scancode, int p_unicode_char, boolean p_pressed);
 
 	/**
 	 * Forward game device's key events from the main thread to the GL thread.
@@ -176,22 +178,6 @@ public class GodotLib {
 	public static native void audio();
 
 	/**
-	 * Used to setup a {@link org.godotengine.godot.Godot.SingletonBase} instance.
-	 * @param p_name Name of the instance.
-	 * @param p_object Reference to the singleton instance.
-	 */
-	public static native void singleton(String p_name, Object p_object);
-
-	/**
-	 * Used to complete registration of the {@link org.godotengine.godot.Godot.SingletonBase} instance's methods.
-	 * @param p_sname Name of the instance
-	 * @param p_name Name of the method to register
-	 * @param p_ret Return type of the registered method
-	 * @param p_params Method parameters types
-	 */
-	public static native void method(String p_sname, String p_name, String p_ret, String[] p_params);
-
-	/**
 	 * Used to access Godot global properties.
 	 * @param p_key Property key
 	 * @return String value of the property
@@ -204,7 +190,7 @@ public class GodotLib {
 	 * @param p_method Name of the method to invoke
 	 * @param p_params Parameters to use for method invocation
 	 */
-	public static native void callobject(int p_id, String p_method, Object[] p_params);
+	public static native void callobject(long p_id, String p_method, Object[] p_params);
 
 	/**
 	 * Invoke method |p_method| on the Godot object specified by |p_id| during idle time.
@@ -212,7 +198,7 @@ public class GodotLib {
 	 * @param p_method Name of the method to invoke
 	 * @param p_params Parameters to use for method invocation
 	 */
-	public static native void calldeferred(int p_id, String p_method, Object[] p_params);
+	public static native void calldeferred(long p_id, String p_method, Object[] p_params);
 
 	/**
 	 * Forward the results from a permission request.

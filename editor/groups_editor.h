@@ -41,9 +41,8 @@
 #include "scene/gui/tool_button.h"
 #include "scene/gui/tree.h"
 
-class GroupDialog : public WindowDialog {
-
-	GDCLASS(GroupDialog, WindowDialog);
+class GroupDialog : public AcceptDialog {
+	GDCLASS(GroupDialog, AcceptDialog);
 
 	ConfirmationDialog *error;
 
@@ -104,7 +103,6 @@ public:
 };
 
 class GroupsEditor : public VBoxContainer {
-
 	GDCLASS(GroupsEditor, VBoxContainer);
 
 	Node *node;

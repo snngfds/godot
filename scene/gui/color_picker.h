@@ -44,7 +44,6 @@
 #include "scene/gui/tool_button.h"
 
 class ColorPicker : public BoxContainer {
-
 	GDCLASS(ColorPicker, BoxContainer);
 
 private:
@@ -116,7 +115,7 @@ public:
 
 	void add_preset(const Color &p_color);
 	void erase_preset(const Color &p_color);
-	PoolColorArray get_presets() const;
+	PackedColorArray get_presets() const;
 
 	void set_hsv_mode(bool p_enabled);
 	bool is_hsv_mode() const;
@@ -139,7 +138,6 @@ public:
 };
 
 class ColorPickerButton : public Button {
-
 	GDCLASS(ColorPickerButton, Button);
 
 	PopupPanel *popup;

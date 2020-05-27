@@ -34,10 +34,9 @@
 #include "core/resource.h"
 #include "scene/resources/sky.h"
 #include "scene/resources/texture.h"
-#include "servers/visual_server.h"
+#include "servers/rendering_server.h"
 
 class Environment : public Resource {
-
 	GDCLASS(Environment, Resource);
 
 public:
@@ -90,7 +89,7 @@ public:
 private:
 	RID environment;
 
-	BGMode bg_mode;
+	BGMode bg_mode = BG_CLEAR_COLOR;
 	Ref<Sky> bg_sky;
 	float bg_sky_custom_fov;
 	Vector3 sky_rotation;
@@ -105,7 +104,7 @@ private:
 	AmbientSource ambient_source;
 	ReflectionSource reflection_source;
 
-	ToneMapper tone_mapper;
+	ToneMapper tone_mapper = TONE_MAPPER_LINEAR;
 	float tonemap_exposure;
 	float tonemap_white;
 	bool tonemap_auto_exposure;
@@ -125,7 +124,6 @@ private:
 	float ssr_fade_in;
 	float ssr_fade_out;
 	float ssr_depth_tolerance;
-	bool ssr_roughness;
 
 	bool ssao_enabled;
 	float ssao_radius;
@@ -133,7 +131,7 @@ private:
 	float ssao_bias;
 	float ssao_direct_light_affect;
 	float ssao_ao_channel_affect;
-	SSAOBlur ssao_blur;
+	SSAOBlur ssao_blur = SSAO_BLUR_3x3;
 	float ssao_edge_sharpness;
 
 	bool glow_enabled;
@@ -142,11 +140,10 @@ private:
 	float glow_strength;
 	float glow_mix;
 	float glow_bloom;
-	GlowBlendMode glow_blend_mode;
+	GlowBlendMode glow_blend_mode = GLOW_BLEND_MODE_ADDITIVE;
 	float glow_hdr_bleed_threshold;
 	float glow_hdr_bleed_scale;
 	float glow_hdr_luminance_cap;
-	bool glow_bicubic_upscale;
 
 	bool fog_enabled;
 	Color fog_color;
@@ -170,6 +167,7 @@ protected:
 	static void _bind_methods();
 	virtual void _validate_property(PropertyInfo &property) const;
 #ifndef DISABLE_DEPRECATED
+	// Kept for compatibility from 3.x to 4.0.
 	bool _set(const StringName &p_name, const Variant &p_value);
 #endif
 
@@ -201,7 +199,7 @@ public:
 	Color get_ambient_light_color() const;
 	float get_ambient_light_energy() const;
 	float get_ambient_light_sky_contribution() const;
-	int get_camera_feed_id(void) const;
+	int get_camera_feed_id() const;
 
 	void set_tonemapper(ToneMapper p_tone_mapper);
 	ToneMapper get_tonemapper() const;
@@ -256,9 +254,6 @@ public:
 
 	void set_ssr_depth_tolerance(float p_depth_tolerance);
 	float get_ssr_depth_tolerance() const;
-
-	void set_ssr_rough(bool p_enable);
-	bool is_ssr_rough() const;
 
 	void set_ssao_enabled(bool p_enable);
 	bool is_ssao_enabled() const;
@@ -317,9 +312,6 @@ public:
 	void set_glow_hdr_bleed_scale(float p_scale);
 	float get_glow_hdr_bleed_scale() const;
 
-	void set_glow_bicubic_upscale(bool p_enable);
-	bool is_glow_bicubic_upscale_enabled() const;
-
 	void set_fog_enabled(bool p_enabled);
 	bool is_fog_enabled() const;
 
@@ -376,7 +368,6 @@ VARIANT_ENUM_CAST(Environment::GlowBlendMode)
 VARIANT_ENUM_CAST(Environment::SSAOBlur)
 
 class CameraEffects : public Resource {
-
 	GDCLASS(CameraEffects, Resource);
 
 private:

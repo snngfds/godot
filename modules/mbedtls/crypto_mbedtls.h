@@ -41,7 +41,6 @@
 class CryptoMbedTLS;
 class SSLContextMbedTLS;
 class CryptoKeyMbedTLS : public CryptoKey {
-
 private:
 	mbedtls_pk_context pkey;
 	int locks;
@@ -49,7 +48,7 @@ private:
 public:
 	static CryptoKey *create();
 	static void make_default() { CryptoKey::_create = create; }
-	static void finalize() { CryptoKey::_create = NULL; }
+	static void finalize() { CryptoKey::_create = nullptr; }
 
 	virtual Error load(String p_path);
 	virtual Error save(String p_path);
@@ -70,7 +69,6 @@ public:
 };
 
 class X509CertificateMbedTLS : public X509Certificate {
-
 private:
 	mbedtls_x509_crt cert;
 	int locks;
@@ -78,7 +76,7 @@ private:
 public:
 	static X509Certificate *create();
 	static void make_default() { X509Certificate::_create = create; }
-	static void finalize() { X509Certificate::_create = NULL; }
+	static void finalize() { X509Certificate::_create = nullptr; }
 
 	virtual Error load(String p_path);
 	virtual Error load_from_memory(const uint8_t *p_buffer, int p_len);
@@ -100,7 +98,6 @@ public:
 };
 
 class CryptoMbedTLS : public Crypto {
-
 private:
 	mbedtls_entropy_context entropy;
 	mbedtls_ctr_drbg_context ctr_drbg;
@@ -113,7 +110,7 @@ public:
 	static X509CertificateMbedTLS *get_default_certificates();
 	static void load_default_certificates(String p_path);
 
-	virtual PoolByteArray generate_random_bytes(int p_bytes);
+	virtual PackedByteArray generate_random_bytes(int p_bytes);
 	virtual Ref<CryptoKey> generate_rsa(int p_bytes);
 	virtual Ref<X509Certificate> generate_self_signed_certificate(Ref<CryptoKey> p_key, String p_issuer_name, String p_not_before, String p_not_after);
 
